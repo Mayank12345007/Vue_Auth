@@ -1,24 +1,6 @@
 <script setup>
-import { ref } from "vue";
-import Axios from "axios";
-const formData = ref({
-  name: "",
-  email: "",
-  password: "",
-  confirm_password: "",
-});
-
-const handleSubmit = () => {
-  // try {
-  //   const response = await Axios.post("address", {
-  //     formData,
-  //   });
-
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  console.log(formData.value);
-};
+import { useAuthStore } from "@/stores/Auth";
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -38,7 +20,7 @@ const handleSubmit = () => {
             <div class="formbox">
               <label>Name</label>
               <input
-                v-model.trim="formData.name"
+                v-model.trim="authStore.signupFormData.name"
                 type="text"
                 placeholder="name"
               />
@@ -46,7 +28,7 @@ const handleSubmit = () => {
             <div class="formbox">
               <label>Email</label>
               <input
-                v-model.trim="formData.email"
+                v-model.trim="authStore.signupFormData.email"
                 type="email"
                 placeholder="email"
               />
@@ -54,7 +36,7 @@ const handleSubmit = () => {
             <div class="formbox">
               <label>Passowrd</label>
               <input
-                v-model.trim="formData.password"
+                v-model.trim="authStore.signupFormData.password"
                 type="password"
                 placeholder="password"
               />
@@ -62,13 +44,13 @@ const handleSubmit = () => {
             <div class="formbox">
               <label>Confirm Password</label>
               <input
-                v-model.trim="formData.confirm_password"
+                v-model.trim="authStore.signupFormData.confirm_password"
                 type="password"
                 placeholder="confirm password"
               />
             </div>
             <div class="signup_btn">
-              <button @click="handleSubmit">Register</button>
+              <button @click="authStore.submitSignupForm()">Register</button>
             </div>
           </form>
         </div>
@@ -173,20 +155,19 @@ const handleSubmit = () => {
   color: black;
 }
 
-@media (max-width: 768px){
-  .signupbox{
+@media (max-width: 768px) {
+  .signupbox {
     padding: 0;
     height: 90vh;
-
   }
-  .imgBox{
+  .imgBox {
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: -1;
     background-color: rgba(0, 0, 0, 0.2);
   }
-  .signup_content{
+  .signup_content {
     width: 100%;
   }
 }

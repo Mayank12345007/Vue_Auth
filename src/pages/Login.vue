@@ -1,25 +1,6 @@
 <script setup>
-import { ref } from "vue";
-import Axios from "axios";
-
-const formData = ref({
-  email: "",
-  password: "",
-});
-const handleSubmit = () => {
-  // try {
-  //   const response = await Axios.post("address", {
-  //     formData,
-  //   });
-  //   if(response.data.status === true){
-  //     alert("Logged in");
-  //   }
-  // } catch (error) {
-  //   console.error(error);
-  // }
-
-  console.log(formData.value);
-};
+import { useAuthStore } from "@/stores/Auth";
+const authStore = useAuthStore();
 </script>
 <template>
   <div class="container">
@@ -36,7 +17,7 @@ const handleSubmit = () => {
           <div class="form_container">
             <label>Email</label>
             <input
-              v-model.trim="formData.email"
+              v-model.trim="authStore.loginFormData.email"
               type="email"
               placeholder="email"
             />
@@ -44,13 +25,15 @@ const handleSubmit = () => {
           <div class="form_container">
             <label>Password</label>
             <input
-              v-model.trim="formData.password"
+              v-model.trim="authStore.loginFormData.password"
               type="password"
               placeholder="password"
             />
           </div>
           <div class="login_btn">
-            <button class="form_btn" @click="handleSubmit()">Login</button>
+            <button class="form_btn" @click="authStore.submitLoginForm()">
+              Login
+            </button>
           </div>
         </form>
       </div>
@@ -114,7 +97,7 @@ const handleSubmit = () => {
   line-height: 2.5rem;
   border-radius: 5px;
   padding: 10px 20px;
-  outline:none;
+  outline: none;
   font-weight: 400;
   font-size: 16px;
   border: 1px solid #a382f9;
